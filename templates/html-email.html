@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<style type="text/css">
+			body {
+				font-family: Helvetica, Arial, Verdana, Trebuchet MS
+			}
+			.tags {
+				font-style: italic;
+				color: #999;
+			}
+			.seeds { color: green; }
+			.peers { color: red; }
+			table {
+				border-collapse: collapse;
+			}
+			td, th {
+				padding: 0.3rem;
+			}
+			th {
+				background: lightblue;
+			}
+			.even td {
+				background: #EEE;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>HIGHLIGHTS</h1>
+		<table>
+			<thead>
+				<th>Name</th>
+				<th>IMDb</th>
+				<th>Size</th>
+				<th>Seeds/Peers</th>
+			</thead>
+			{% set row_class = cycler('odd', 'even') %}
+			{% for torrent in highlights %}
+			<tbody class="{{ row_class.next() }}">
+				<td><a href="http://torrentz.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
+				<td><a href="http://www.imdb.com/find?q={{ torrent.title|urlencode }}&s=tt">(i)</a></td>
+				<td>{{ torrent.size }}</td>
+				<td><span class="seeds">{{ torrent.seeds }}</span>/<span class="peers">{{ torrent.peers }}</span></td>
+			</tbody>
+			{% endfor %}
+		</table>
+		<h1>OTHERS</h1>
+		<table>
+			<thead>
+				<th>Name</th>
+				<th>IMDb</th>
+				<th>Size</th>
+				<th>Seeds/Peers</th>
+			</thead>
+			{% set row_class = cycler('odd', 'even') %}
+			{% for torrent in others %}
+			<tbody class="{{ row_class.next() }}">
+				<td><a href="http://torrentz.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
+				<td><a href="http://www.imdb.com/find?q={{ torrent.title|urlencode }}&s=tt">(i)</a></td>
+				<td>{{ torrent.size }}</td>
+				<td><span class="seeds">{{ torrent.seeds }}</span>/<span class="peers">{{ torrent.peers }}</span></td>
+			</tbody>
+			{% endfor %}
+		</table>
+	</body>
+</html>

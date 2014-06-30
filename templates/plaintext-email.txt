@@ -1,0 +1,13 @@
+HIGHLIGHTS
+----------
+{% for torrent in highlights %}
+{{ torrent.name }} -- {{ torrent.size }} - {{ torrent.seeds }}/{{ torrent.peers }}
+http://torrentz.eu/{{ torrent.url }}
+{% endfor %}
+
+OTHERS
+------
+{% for torrent in others %}
+{{ torrent.name }} -- {{ torrent.size }} - {{ torrent.seeds }}/{{ torrent.peers }}
+http://torrentz.eu/{{ torrent.url }}
+{% endfor %}
