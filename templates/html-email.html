@@ -16,7 +16,7 @@
 				border-collapse: collapse;
 			}
 			td, th {
-				padding: 0.3rem;
+				padding: 0.3em;
 			}
 			th {
 				background: lightblue;
@@ -41,7 +41,7 @@
 				<td><a href="http://torrentz.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
 				<td><a href="http://www.imdb.com/find?q={{ torrent.title|urlencode }}&s=tt">(i)</a></td>
 				<td>{{ torrent.size }}</td>
-				<td><span class="seeds">{{ torrent.seeds }}</span>/<span class="peers">{{ torrent.peers }}</span></td>
+				<td><span class="seeds">{{ torrent.seeds }}</span> / <span class="peers">{{ torrent.peers }}</span></td>
 			</tbody>
 			{% endfor %}
 		</table>
@@ -59,7 +59,7 @@
 				<td><a href="http://torrentz.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
 				<td><a href="http://www.imdb.com/find?q={{ torrent.title|urlencode }}&s=tt">(i)</a></td>
 				<td>{{ torrent.size }}</td>
-				<td><span class="seeds">{{ torrent.seeds }}</span>/<span class="peers">{{ torrent.peers }}</span></td>
+				<td><span class="seeds">{{ torrent.seeds }}</span> / <span class="peers">{{ torrent.peers }}</span></td>
 			</tbody>
 			{% endfor %}
 		</table>

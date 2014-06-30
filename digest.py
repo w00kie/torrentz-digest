@@ -1,7 +1,8 @@
+import re
 import requests
 from bs4 import BeautifulSoup
-import re
 from jinja2 import Environment, FileSystemLoader
+from premailer import transform
 
 QUERY = 'movies added:1d'
 
@@ -65,6 +66,6 @@ for hit in soup.select('.results dl'):
 		others.append(torrent)
 
 plain_email = plaintext.render(highlights=highlights, others=others)
-html_email = html.render(highlights=highlights, others=others)
+html_email = transform(html.render(highlights=highlights, others=others))
 
 print(html_email)
