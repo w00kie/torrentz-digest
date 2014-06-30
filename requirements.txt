@@ -1,5 +1,9 @@
 Jinja2==2.7.3
 MarkupSafe==0.23
 beautifulsoup4==4.3.2
+cssselect==0.9.1
+cssutils==1.0
+lxml==3.3.5
+premailer==2.5.0
 requests==2.3.0
 wsgiref==0.1.2
