@@ -80,8 +80,8 @@ msg = MIMEMultipart('alternative')
 msg['Subject'] = 'Torrentz Digest'
 msg['From'] = FROM_ADDRESS
 msg['To'] = TO_ADDRESS
-msg.attach(MIMEText(plain_email), 'plain')
-msg.attach(MIMEText(html_email), 'html')
+msg.attach(MIMEText(plain_email, 'plain'))
+msg.attach(MIMEText(html_email, 'html'))
 
 # Send the message via local SMTP server
 s = smtplib.SMTP('localhost')
