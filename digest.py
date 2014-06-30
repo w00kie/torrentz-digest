@@ -3,8 +3,14 @@ import requests
 from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader
 from premailer import transform
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 QUERY = 'movies added:1d'
+
+FROM_ADDRESS = 'kessel@w00kie.com'
+TO_ADDRESS = 'francois@rejete.com'
 
 WHITELIST = re.compile('\s(720p|1080p)\s', re.IGNORECASE)
 BLACKLIST = re.compile('\s(cam|hdcam|hindi|punjabi|telugu)\s', re.IGNORECASE)
@@ -65,7 +71,19 @@ for hit in soup.select('.results dl'):
 	else:
 		others.append(torrent)
 
+# Render templates
 plain_email = plaintext.render(highlights=highlights, others=others)
 html_email = transform(html.render(highlights=highlights, others=others))
 
-print(html_email)
+# Prepare the email message
+msg = MIMEMultipart('alternative')
+msg['Subject'] = 'Torrentz Digest'
+msg['From'] = FROM_ADDRESS
+msg['To'] = TO_ADDRESS
+msg.attach(MIMEText(plain_email), 'plain')
+msg.attach(MIMEText(html_email), 'html')
+
+# Send the message via local SMTP server
+s = smtplib.SMTP('localhost')
+s.sendmail(FROM_ADDRESS, TO_ADDRESS, msg.as_string())
+s.quit()
