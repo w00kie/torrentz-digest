@@ -1,3 +1,6 @@
+import argparse
+import os
+import socket
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -8,9 +11,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 QUERY = 'movies added:1d'
-
-FROM_ADDRESS = 'kessel@w00kie.com'
-TO_ADDRESS = 'francois@rejete.com'
 
 WHITELIST = re.compile('\s(720p|1080p)\s', re.IGNORECASE)
 BLACKLIST = re.compile('\s(cam|hdcam|hindi|punjabi|telugu)\s', re.IGNORECASE)
@@ -33,6 +33,24 @@ KEYWORDS = ['brrip',
 	'[0-9]{3,4}p',
 	'[0-9]{3,}mb']
 TITLE_FILTER = re.compile('\s(' + '|'.join(KEYWORDS) + ')\s', re.IGNORECASE)
+
+# Setup the command line arguments management
+parser = argparse.ArgumentParser(description=
+	'Send a digest of new torrents from Torrentz.eu')
+# Find user and hostname to create default from address
+default_from = os.getlogin() + '@' + socket.gethostname()
+# Add arguments
+parser.add_argument('--from', dest='from_', default=default_from,
+	help='''E-mail address from which the email originates.
+	Defaults to: %s''' % (default_from,))
+parser.add_argument('--to', required=True,
+	help='E-mail address to which digest is sent')
+# Parse the arguments
+args = parser.parse_args()
+FROM_ADDRESS = args.from_
+TO_ADDRESS = args.to
+
+print(FROM_ADDRESS, TO_ADDRESS)
 
 # Setup Jinja2 templates
 env = Environment(loader=FileSystemLoader('templates'))
