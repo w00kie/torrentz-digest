@@ -50,8 +50,6 @@ args = parser.parse_args()
 FROM_ADDRESS = args.from_
 TO_ADDRESS = args.to
 
-print(FROM_ADDRESS, TO_ADDRESS)
-
 # Setup Jinja2 templates
 env = Environment(loader=FileSystemLoader('templates'))
 plaintext = env.get_template('plaintext-email.txt')
