@@ -3,7 +3,7 @@ import os
 import socket
 import re
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 from jinja2 import Environment, FileSystemLoader
 from premailer import transform
 import smtplib
@@ -62,11 +62,18 @@ r = requests.get('http://torrentz.eu/verified', params=payload)
 # Parse the html page
 soup = BeautifulSoup(r.text)
 
+# Helper to get a string out of a tag even if it contains another tag
+def merge_contents(tag):
+	if type(tag) is NavigableString:
+		return tag
+	else:
+		return ''.join(map(merge_contents, tag.contents))
+
 # Find each result hit on the page and get the info
 highlights = []
 others = []
 for hit in soup.select('.results dl'):
-	torrent = {'name': hit.dt.a.string,
+	torrent = {'name': merge_contents(hit.dt.a.string),
 		'url': hit.dt.a.get('href'),
 		'size': hit.find('span', class_='s').string,
 		'seeds': hit.find('span', class_='u').string,
