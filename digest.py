@@ -38,7 +38,7 @@ TITLE_FILTER = re.compile('\s(' + '|'.join(KEYWORDS) + ')\s', re.IGNORECASE)
 parser = argparse.ArgumentParser(description=
 	'Send a digest of new torrents from Torrentz.eu')
 # Find user and hostname to create default from address
-default_from = os.getlogin() + '@' + socket.gethostname()
+default_from = os.environ['LOGNAME'] + '@' + socket.gethostname()
 # Add arguments
 parser.add_argument('--from', dest='from_', default=default_from,
 	help='''E-mail address from which the email originates.
