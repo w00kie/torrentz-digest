@@ -73,7 +73,7 @@ def merge_contents(tag):
 highlights = []
 others = []
 for hit in soup.select('.results dl'):
-	torrent = {'name': merge_contents(hit.dt.a.string),
+	torrent = {'name': merge_contents(hit.dt.a),
 		'url': hit.dt.a.get('href'),
 		'size': hit.find('span', class_='s').string,
 		'seeds': hit.find('span', class_='u').string,
