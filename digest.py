@@ -48,10 +48,12 @@ parser.add_argument('--from', dest='from_', default=default_from,
 	Defaults to: %s''' % (default_from,))
 parser.add_argument('--to', required=True,
 	help='E-mail address to which digest is sent')
+parser.add_argument('--debug', action='store_true')
 # Parse the arguments
 args = parser.parse_args()
 FROM_ADDRESS = args.from_
 TO_ADDRESS = args.to
+DEBUG = args.debug
 
 # Setup Jinja2 templates
 env = Environment(loader=FileSystemLoader('templates'))
@@ -109,7 +111,10 @@ msg['To'] = TO_ADDRESS
 msg.attach(MIMEText(plain_email, 'plain'))
 msg.attach(MIMEText(html_email, 'html'))
 
-# Send the message via local SMTP server
-s = smtplib.SMTP('localhost')
-s.sendmail(FROM_ADDRESS, TO_ADDRESS, msg.as_string())
-s.quit()
+if not DEBUG:
+	# Send the message via local SMTP server
+	s = smtplib.SMTP('localhost')
+	s.sendmail(FROM_ADDRESS, TO_ADDRESS, msg.as_string())
+	s.quit()
+else:
+	print(plain_email)
