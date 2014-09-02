@@ -63,7 +63,7 @@ html = env.get_template('html-email.html')
 # Get the search results - hide under a fake Chrome user-agent
 payload = {'f': QUERY}
 headers = {'User-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.143 Safari/537.36'}
-r = requests.get('http://torrentz.eu/verified', params=payload)
+r = requests.get('http://torrentz.eu/verified', params=payload, headers=headers)
 
 # Parse the html page
 soup = BeautifulSoup(r.text)
