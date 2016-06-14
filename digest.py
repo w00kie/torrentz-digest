@@ -69,7 +69,7 @@ headers = {'User-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36
 r = requests.get('http://torrentz.eu/verified', params=payload, headers=headers)
 
 # Parse the html page
-soup = BeautifulSoup(r.text)
+soup = BeautifulSoup(r.text, 'lxml')
 
 # Helper to get a string out of a tag even if it contains another tag
 def merge_contents(tag):

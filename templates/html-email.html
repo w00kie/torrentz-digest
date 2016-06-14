@@ -35,9 +35,8 @@
 				<th>Size</th>
 				<th>Seeds/Peers</th>
 			</thead>
-			{% set row_class = cycler('odd', 'even') %}
 			{% for torrent in highlights %}
-			<tbody class="{{ row_class.next() }}">
+			<tbody class="{{ loop.cycle('odd', 'even') }}">
 				<td><a href="http://torrentz.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
 				<td><a href="http://letterboxd.com/search/films/{{ torrent.title|urlencode }}/">(i)</a></td>
 				<td>{{ torrent.size }}</td>
@@ -53,9 +52,8 @@
 				<th>Size</th>
 				<th>Seeds/Peers</th>
 			</thead>
-			{% set row_class = cycler('odd', 'even') %}
 			{% for torrent in others %}
-			<tbody class="{{ row_class.next() }}">
+			<tbody class="{{ loop.cycle('odd', 'even') }}">
 				<td><a href="http://torrentz.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
 				<td><a href="http://www.imdb.com/find?q={{ torrent.title|urlencode }}&s=tt">(i)</a></td>
 				<td>{{ torrent.size }}</td>
