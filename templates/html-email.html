@@ -37,7 +37,7 @@
 			</thead>
 			{% for torrent in highlights %}
 			<tbody class="{{ loop.cycle('odd', 'even') }}">
-				<td><a href="http://torrentz.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
+				<td><a href="http://torrentz2.eu{{ torrent.url }}"><span class="title">{{ torrent.title }}</span></a> <span class="tags">{{ torrent.tags }}</span></td>
 				<td><a href="http://letterboxd.com/search/films/{{ torrent.title|urlencode }}/">(i)</a></td>
 				<td>{{ torrent.size }}</td>
 				<td><span class="seeds">{{ torrent.seeds }}</span> / <span class="peers">{{ torrent.peers }}</span></td>

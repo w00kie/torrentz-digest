@@ -9,5 +9,5 @@ OTHERS
 ------
 {% for torrent in others %}
 {{ torrent.name }} -- {{ torrent.size }} - {{ torrent.seeds }}/{{ torrent.peers }}
-http://torrentz.eu/{{ torrent.url }}
+http://torrentz2.eu/{{ torrent.url }}
 {% endfor %}

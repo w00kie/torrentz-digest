@@ -12,33 +12,34 @@ from email.mime.text import MIMEText
 
 QUERY = 'movies added:1d'
 
-WHITELIST = re.compile('\s(720p|1080p)\s', re.IGNORECASE)
-BLACKLIST = re.compile('\s(cam|hdcam|hindi|punjabi|telugu)\s', re.IGNORECASE)
+WHITELIST = re.compile(r'\s(720p|1080p)\s', re.IGNORECASE)
+BLACKLIST = re.compile(r'\s(cam|hdcam|hindi|punjabi|telugu)\s', re.IGNORECASE)
 
 # Scene keywords to try to identify the movie title
-KEYWORDS = ['brrip',
-	'dvdscr',
-	'dvdrip',
-	'dvd5',
-	'cam',
-	'hdcam',
-	'webdl',
-	'unrated',
-	'extended',
-	'limited',
-	'x264',
-	'xvid',
-	'aac',
-	'ac3',
-	'dual audio',
-	'tc',
-	'hc',
-	'hevc',
-	'1CD',
-	'readnfo',
-	'[0-9]{3,4}p',
-	'[0-9]{3,}mb']
-TITLE_FILTER = re.compile('\s(' + '|'.join(KEYWORDS) + ')\s', re.IGNORECASE)
+KEYWORDS = [r'brrip',
+	r'dvdscr',
+	r'dvdrip',
+	r'dvd5',
+	r'cam',
+	r'hdcam',
+	r'web\-?dl',
+	r'unrated',
+	r'extended',
+	r'limited',
+	r'x264',
+	r'xvid',
+	r'aac',
+	r'ac3',
+	r'dual audio',
+	r'tc',
+	r'hc',
+	r'hevc',
+	r'1CD',
+	r'readnfo',
+	r'[0-9]{3,4}p',
+	r'[0-9]{3,}mb'
+]
+TITLE_FILTER = re.compile(r'\s(' + '|'.join(KEYWORDS) + ')\s', re.IGNORECASE)
 
 # Setup the command line arguments management
 parser = argparse.ArgumentParser(description=
@@ -82,11 +83,18 @@ def merge_contents(tag):
 highlights = []
 others = []
 for hit in soup.select('.results dl'):
-	torrent = {'name': merge_contents(hit.dt.a),
-		'url': hit.dt.a.get('href'),
-		'size': hit.find('span', class_='s').string,
-		'seeds': hit.find('span', class_='u').string,
-		'peers': hit.find('span', class_='d').string}
+	try:
+		attributes = hit.dd.find_all('span')
+		torrent = {'name': hit.dt.a.string,
+			'url': hit.dt.a.get('href'),
+			'size': attributes[2].string,
+			'seeds': attributes[3].string,
+			'peers': attributes[4].string}
+	except AttributeError:
+		continue
+
+	# Clean torrent name, removing scene formatting
+	torrent['name'] = re.sub(r'\.|\[|\]|\(|\)', ' ', torrent['name'])
 
 	# Identify title and tags from torrent name
 	title = TITLE_FILTER.split(torrent['name'])[0]
