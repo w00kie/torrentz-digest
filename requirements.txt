@@ -5,11 +5,15 @@
 #    pip-compile --output-file requirements.txt requirements.in
 #
 
-beautifulsoup4==4.4.1
-cssselect==0.9.1          # via premailer
-cssutils==1.0.1           # via premailer
-Jinja2==2.8
-lxml==3.6.0               # via premailer
-MarkupSafe==0.23          # via jinja2
-premailer==3.0.0
-requests==2.10.0
+beautifulsoup4==4.6.3
+certifi==2018.11.29       # via requests
+chardet==3.0.4            # via requests
+cssselect==1.0.3          # via premailer
+cssutils==1.0.2           # via premailer
+idna==2.8                 # via requests
+Jinja2==2.10
+lxml==4.2.5               # via premailer
+MarkupSafe==1.1.0         # via jinja2
+premailer==3.2.0
+requests==2.21.0
+urllib3==1.24.1           # via requests
